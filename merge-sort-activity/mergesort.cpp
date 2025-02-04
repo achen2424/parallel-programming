@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
     }
 
     //convert string to size_t
-    size_t size = std::atol(argv[1]);
+    size_t size = std::stoi(argv[1]);
 
     //std::cout << size << ", " <<size + 2 << "\n";
 
@@ -104,8 +104,8 @@ int* merge(int* leftSide,int leftSize, int* rightSide, int rightSize) {
     while (a < leftSize && b < rightSize) {
         if (leftSide[a] <= rightSide[b]) {
             newArray[c] = leftSide[a]; 
-        c++;
-        a++;
+            c++;
+            a++;
         } else {
             newArray[c] = rightSide[b];
             c++;
