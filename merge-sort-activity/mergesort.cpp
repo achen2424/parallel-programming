@@ -1,3 +1,13 @@
+/*sbatch to run on compute node
+sbatch --mem=32G --time=01:00:00 --partition=Centaurus ./script.sh
+slurm-##.out
+mv slurm.out output.csv
+git add output.csv
+add script.sh
+git commit
+can use excel/lib
+*/
+
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -6,15 +16,21 @@ int* arrayRandomizer(int size);
 int* mergeSort(int* array, int size);
 int* merge(int* leftSide, int leftSize, int* rightSide, int rightSize);
 
-int main() {
-    int size;
+int main(int argc, char* argv[]) {
+    //check number of arguments
+    if (argc != 2) {
+        std::cout << "Invalid number of arguments" << std::endl;
+        return 0;
+    }
+
+    //convert string to size_t
+    size_t size = std::atol(argv[1]);
+
+    //std::cout << size << ", " <<size + 2 << "\n";
+
+
     //change seed to current time
     srand(time(0));
-    
-    std::cout << "Size of array: " << std::endl;
-    //make size between 1 and 10
-    size = rand() % 10 + 1;
-    std::cout << size << std::endl;
 
     //create array of random ints
     int* array = arrayRandomizer(size);
@@ -68,7 +84,15 @@ int* mergeSort(int* array, int size) {
     int* sortedLeftSide = mergeSort(leftSide, middle);
     int* sortedRightSide = mergeSort(rightSide, size - middle);
 
+    //delete arrays
+    delete[] leftSide;
+    delete[] rightSide;
+
     int* mergedArray = merge(sortedLeftSide, middle, sortedRightSide, size - middle);
+
+    //delete arrays
+    delete[] sortedLeftSide;
+    delete[] sortedRightSide;
 
     return mergedArray;
 }
