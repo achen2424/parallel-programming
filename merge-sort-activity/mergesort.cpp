@@ -16,9 +16,6 @@ int main(int argc, char* argv[]) {
     //convert string to size_t
     size_t size = std::stoi(argv[1]);
 
-    //std::cout << size << ", " <<size + 2 << "\n";
-
-
     //change seed to current time
     srand(time(0));
 
@@ -36,6 +33,7 @@ int main(int argc, char* argv[]) {
 
     //calculate time
     double time_taken = double(end - start) / CLOCKS_PER_SEC;
+    std::cout << "Size: " << size << std::endl;
     std::cout << "Time taken: " << time_taken << std::endl;
 
     //delete arrays
