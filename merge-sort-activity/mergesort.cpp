@@ -23,16 +23,16 @@ int main(int argc, char* argv[]) {
     int* array = arrayRandomizer(size);
 
     //start timer
-    clock_t start = clock();
+    time_t start = time(nullptr);
 
     //sort array
     int* sortedArray = mergeSort(array, size);
     
     //end timer
-    clock_t end = clock();
+    time_t end = time(nullptr);
 
     //calculate time
-    double time_taken = double(end - start) / CLOCKS_PER_SEC;
+    double time_taken = difftime(end, start);
     std::cout << size << "," << time_taken << std::endl;
 
     //delete arrays
