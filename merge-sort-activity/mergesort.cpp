@@ -1,13 +1,3 @@
-/*sbatch to run on compute node
-sbatch --mem=32G --time=01:00:00 --partition=Centaurus ./script.sh
-slurm-##.out
-mv slurm.out output.csv
-git add output.csv
-add script.sh
-git commit
-can use excel/lib
-*/
-
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -34,6 +24,10 @@ int main(int argc, char* argv[]) {
 
     //create array of random ints
     int* array = arrayRandomizer(size);
+
+    //start timer
+    clock_t start = clock();
+
     std::cout << "Unsorted array: " << std::endl;
     for (int i = 0; i < size; i++) {
         std::cout << array[i] << " ";
@@ -47,6 +41,13 @@ int main(int argc, char* argv[]) {
         std::cout << sortedArray[i] << " ";
     }
     std::cout << std::endl;
+    
+    //end timer
+    clock_t end = clock();
+
+    //calculate time
+    double time_taken = double(end - start) / CLOCKS_PER_SEC;
+    std::cout << "Time taken: " << time_taken << std::endl;
 
     //delete arrays
     delete[] array;
