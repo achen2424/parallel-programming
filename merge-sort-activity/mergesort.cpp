@@ -28,19 +28,8 @@ int main(int argc, char* argv[]) {
     //start timer
     clock_t start = clock();
 
-    std::cout << "Unsorted array: " << std::endl;
-    for (int i = 0; i < size; i++) {
-        std::cout << array[i] << " ";
-    }
-    std::cout << std::endl;
-
     //sort array
-    std::cout << "Sorted array: " << std::endl;
     int* sortedArray = mergeSort(array, size);
-    for (int i = 0; i < size; i++) {
-        std::cout << sortedArray[i] << " ";
-    }
-    std::cout << std::endl;
     
     //end timer
     clock_t end = clock();
