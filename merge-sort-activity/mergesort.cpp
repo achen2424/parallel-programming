@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
     auto stop = std::chrono::high_resolution_clock::now();
 
     //calculate time
-    auto duration = duration_cast<milliseconds>(stop - start);
+    auto duration = duration_cast<microseconds>(stop - start);
     cout << size << "," << duration.count() << endl;
 
     //delete arrays
