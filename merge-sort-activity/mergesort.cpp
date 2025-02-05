@@ -33,8 +33,7 @@ int main(int argc, char* argv[]) {
 
     //calculate time
     double time_taken = double(end - start) / CLOCKS_PER_SEC;
-    std::cout << "Size: " << size << std::endl;
-    std::cout << "Time taken: " << time_taken << std::endl;
+    std::cout << size << "," << time_taken << std::endl;
 
     //delete arrays
     delete[] array;
