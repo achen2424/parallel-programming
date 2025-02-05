@@ -1,6 +1,12 @@
+/*I used this website to learn how to measure execution time: 
+https://www.geeksforgeeks.org/measure-execution-time-function-cpp/
+*/
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <chrono>
+using namespace std;
+using namespace std::chrono;
 
 int* arrayRandomizer(int size);
 int* mergeSort(int* array, int size);
@@ -23,17 +29,17 @@ int main(int argc, char* argv[]) {
     int* array = arrayRandomizer(size);
 
     //start timer
-    time_t start = time(nullptr);
+    auto start = std::chrono::high_resolution_clock::now();
 
     //sort array
     int* sortedArray = mergeSort(array, size);
     
     //end timer
-    time_t end = time(nullptr);
+    auto stop = std::chrono::high_resolution_clock::now();
 
     //calculate time
-    double time_taken = difftime(end, start);
-    std::cout << size << "," << time_taken << std::endl;
+    auto duration = duration_cast<milliseconds>(stop - start);
+    cout << size << "," << duration.count() << endl;
 
     //delete arrays
     delete[] array;
