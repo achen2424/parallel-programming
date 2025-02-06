@@ -32,9 +32,9 @@ The benchmarking script outputs data in CSV format with the following header:\
 The plot generated using plot.py shows execution time vs. array size.
 ![PNG image of graph showing execution time growing as array size grows.]merge-sort-activity/plot.png
 
-#Analysis of Benchmark Results
+# Analysis of Benchmark Results
 The benchmarking results show that as the array size grows, the sorting time also increases:
-## CSV File Results
+### CSV File Results
 |size|time(microseconds)|
 |----|----|
 |10|5|
@@ -45,5 +45,5 @@ The benchmarking results show that as the array size grows, the sorting time als
 |1000000|226037|
 |10000000|2451432|
 |100000000|26009821|
-|1000000000|276052096|
+|1000000000|276052096|\
 The times are reasonable and make sense as the output follows the O(n log n) time complexity of merge sort.
