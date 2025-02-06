@@ -1,6 +1,9 @@
 # parallel-programming
 This project implements the Merge Sort algorithm in C++ and compares its performance of different array sizes using the Centaurus HPC cluster. The results are plotted using Matplotlib in Python.
 
+## Author
+This project was developed by Alice Chen as part of ITCS 4145 Parallel Programming.
+
 ## Compile and Run
 To compile the mergesort.cpp file, run:\
 `make`\
@@ -29,7 +32,7 @@ The benchmarking script outputs data in CSV format with the following header:\
 `size,time(microseconds)`
 
 # Plot Output (plot.py)
-The plot generated using plot.py shows execution time vs. array size.
+The plot generated using plot.py shows execution time vs. array size:
 ![PNG image of graph showing execution time growing as array size grows.](merge-sort-activity/plot.png)
 
 # Analysis of Benchmark Results
