@@ -30,7 +30,7 @@ The benchmarking script outputs data in CSV format with the following header:\
 
 # Plot Output (plot.py)
 The plot generated using plot.py shows execution time vs. array size.
-![PNG image of graph showing execution time growing as array size grows.]merge-sort-activity/plot.png
+![PNG image of graph showing execution time growing as array size grows.](merge-sort-activity/plot.png)
 
 # Analysis of Benchmark Results
 The benchmarking results show that as the array size grows, the sorting time also increases:
