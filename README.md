@@ -22,11 +22,28 @@ To remove compiled files and reset the project, run:\
 `make clean`
 
 # SLURM Script (run_mergesort.sh)
-This batch script run the program on different input sizes and stores execution times in mergesort_output.csv.
+This batch script run the program on different input sizes and stores execution times in mergesort_output.csv. The input sizes range from 10 to 10<sup>9</sup>.
 
 # Output Format (mergesort_output.csv)
-The benchmarking script outputs data in CSV format with the following header:
+The benchmarking script outputs data in CSV format with the following header:\
 `size,time(microseconds)`
 
 # Plot Output (plot.py)
 The plot generated using plot.py shows execution time vs. array size.
+![PNG image of graph showing execution time growing as array size grows.]merge-sort-activity/plot.png
+
+#Analysis of Benchmark Results
+The benchmarking results show that as the array size grows, the sorting time also increases:
+## CSV File Results
+|size|time(microseconds)|
+|----|----|
+|10|5|
+|100|18|
+|1000|177|
+|10000|1922|
+|100000|21453|
+|1000000|226037|
+|10000000|2451432|
+|100000000|26009821|
+|1000000000|276052096|
+The times are reasonable and make sense as the output follows the O(n log n) time complexity of merge sort.
