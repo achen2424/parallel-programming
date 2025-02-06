@@ -1,4 +1,6 @@
-/*I used this website to learn how to measure execution time: 
+/*
+Author: Alice Chen
+I used this website to learn how to measure execution time: 
 https://www.geeksforgeeks.org/measure-execution-time-function-cpp/
 */
 #include <iostream>
