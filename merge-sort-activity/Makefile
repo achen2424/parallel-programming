@@ -8,5 +8,8 @@ clean:
 run:
 	sbatch run_mergesort.sh
 
+view:
+	cat mergesort_output.csv
+
 plot:
 	python3 plot.py
