@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 #include <vector>
 #include <fstream>
 #include <chrono>
@@ -45,8 +46,8 @@ void computeForces(vector<Particle>& particles) {
                 double dy = particles[j].y - particles[i].y;
                 double dz = particles[j].z - particles[i].z;
                 //calculate squared distance
-                double distanceSq = dx*dx + dy*dy + dz*dz + softening;
-                double distance = sqrt(distanceSq);
+                double distanceSq = dx*dx + dy*dy + dz*dz;
+                double distance = sqrt(distanceSq + softening);
                 //gravitational force magnitude
                 double force = G * particles[j].mass * particles[i].mass / distanceSq;
                 //force components added to each particle
@@ -85,7 +86,6 @@ void output(vector<Particle>& particles, int timeStep, ofstream& file) {
         file << "\t" << particles[i].fx << "\t" << particles[i].fy << "\t" << particles[i].fz;
     }
     file << endl;
-    file.close();
 }
 
 int main(int argc, char* argv[]) {
