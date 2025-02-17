@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 using namespace std;
 
@@ -27,6 +28,7 @@ void initialize(vector<Particle>& particles, int nbpart) {
     }
 }
 
+//calculate gravitational forces
 void computeForces(vector<Particle>& particles) {
     const double G = 6.674e-11;
     const double softening = 1e-10;
@@ -54,6 +56,7 @@ void computeForces(vector<Particle>& particles) {
     }
 }
 
+//update particle positions
 void update(vector<Particle>& particles, double dt) {
     for(size_t i = 0; i < particles.size(); i++) {
         //calculate acceleration
@@ -71,13 +74,34 @@ void update(vector<Particle>& particles, double dt) {
     }
 }
 
+//write particles to file
+void output(vector<Particle>& particles, int timeStep, ofstream& file) {
+    file << particles.size() << endl;
+    for(size_t i = 0; i < particles.size(); i++) {
+        file << "\t" << particles[i].mass << "\t" << particles[i].x << "\t" << particles[i].y << "\t" << particles[i].z;
+        file << "\t" << particles[i].vx << "\t" << particles[i].vy << "\t" << particles[i].vz;
+        file << "\t" << particles[i].fx << "\t" << particles[i].fy << "\t" << particles[i].fz;
+    }
+    file << endl;
+    file.close();
+}
+
 int main(int argc, char* argv[]) {
     int numParticles = 10;
     double dt = 0.01;
     int numIterations = 10000;
     string outputFile = "nbody_output.txt";
-
+    
     vector<Particle> particles;
     initialize(particles, numParticles);
+    ofstream file(outputFile);
 
+    for (int i = 0; i < numIterations; i++) {
+        computeForces(particles);
+        update(particles, dt);
+        output(particles, i, file);
+    }
+
+    file.close();
+    return 0;
 }
