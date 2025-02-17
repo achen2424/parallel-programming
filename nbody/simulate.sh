@@ -1,5 +1,5 @@
 #!/bin/sh
-#SBATCH --job-name=mergesort
+#SBATCH --job-name=nbody
 #SBATCH --partition=Centaurus
 #SBATCH --time=01:00:00
 #SBATCH --mem=32G
