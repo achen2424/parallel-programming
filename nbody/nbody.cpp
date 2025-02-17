@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <chrono>
 
 using namespace std;
 
@@ -90,17 +91,31 @@ int main(int argc, char* argv[]) {
     int numParticles = 10;
     double dt = 0.01;
     int numIterations = 10000;
-    string outputFile = "nbody_output.txt";
+    string outputFile = "nbody_output.tsv";
+
+    if (argc == 4) {
+        numParticles = atoi(argv[1]);
+        dt = atof(argv[2]);
+        numIterations = atoi(argv[3]);
+    } else {
+        cout << "Please enter the following arguments: ./nbody [numParticles] [dt] [numIterations]" << endl;
+    }
     
     vector<Particle> particles;
     initialize(particles, numParticles);
     ofstream file(outputFile);
+
+    auto start = chrono::high_resolution_clock::now();
 
     for (int i = 0; i < numIterations; i++) {
         computeForces(particles);
         update(particles, dt);
         output(particles, i, file);
     }
+
+    auto stop = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::seconds>(stop - start);
+    cout << "Execution time: " << duration.count() << " seconds" << endl;
 
     file.close();
     return 0;
