@@ -54,6 +54,30 @@ void computeForces(vector<Particle>& particles) {
     }
 }
 
-int main() {
+void update(vector<Particle>& particles, double dt) {
+    for(size_t i = 0; i < particles.size(); i++) {
+        //calculate acceleration
+        double ax = particles[i].fx / particles[i].mass;
+        double ay = particles[i].fy / particles[i].mass;
+        double az = particles[i].fz / particles[i].mass;
+        //update velocity
+        particles[i].vx += ax * dt;
+        particles[i].vy += ay * dt;
+        particles[i].vz += az * dt;
+        //update position
+        particles[i].x += particles[i].vx * dt;
+        particles[i].y += particles[i].vy * dt;
+        particles[i].z += particles[i].vz * dt;
+    }
+}
+
+int main(int argc, char* argv[]) {
+    int numParticles = 10;
+    double dt = 0.01;
+    int numIterations = 10000;
+    string outputFile = "nbody_output.txt";
+
+    vector<Particle> particles;
+    initialize(particles, numParticles);
 
 }
