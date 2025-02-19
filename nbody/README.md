@@ -29,9 +29,9 @@ Each row in solar.tsv contains:
 `num_particles   mass   x   y   z   vx   vy   vz   fx   fy   fz`
  
 ## Benchmark
-9 particles (sun and 8 planets), 200 dt, 5000000 steps, 1000 log interval:/
+9 particles (sun and 8 planets), 200 dt, 5000000 steps, 1000 log interval:\
 Execution time: 17 seconds
-100 particles, 1 dt, 10000 steps, 100 log interval:/
+100 particles, 1 dt, 10000 steps, 100 log interval:\
 Execution time: 4 seconds
-1000 particles, 1 dt, 10000 steps, 500 log interval:/
+1000 particles, 1 dt, 10000 steps, 500 log interval:\
 Execution time: 413 seconds
