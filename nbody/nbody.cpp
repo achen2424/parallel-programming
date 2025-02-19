@@ -57,7 +57,7 @@ void initialize(vector<Particle>& particles, int nbpart) {
 
 
 //calculate gravitational forces
-void computeForces(vector<Particle>& particles) {
+void forceCalculation(vector<Particle>& particles) {
     //prevent division by 0
     const double softening = 1e9;
     //forces reset to 0
@@ -138,7 +138,7 @@ int main(int argc, char* argv[]) {
     auto start = chrono::high_resolution_clock::now();
 
     for (int i = 0; i < numIterations; i++) {
-        computeForces(particles);
+        forceCalculation(particles);
         update(particles, dt);
 
         //dump state at every "log_interval" steps
