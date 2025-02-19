@@ -19,7 +19,7 @@ This project implements an N-Body Simulation in C++ to model the gravitational i
 `make simulate`
 - Clean up generated files:
 `make clean`
-- View simulation time log csv:
+- View simulation time from simulation_times.csv:
 `make view`
 - Generate visualization:
 `make plot`
@@ -33,8 +33,8 @@ The solar.pdf file contains a multi-page visualization of planetary trajectories
  
 ## Benchmark Results
 The following benchmarks measure execution time for three different simulation configurations.
-|Number of Particles|Time Step (dt)|Iterations|Log Interval|Execution Times (seconds)|
+|Number of Particles|Time Step (dt)|Iterations|Log Interval|Execution Times (milliseconds)|
 |-|-|-|-|-|
-|9|200|5000000|1000|17|
-|100|1|10000|100|4|
-|1000|1|10000|500|413|
+|9|200|5000000|1000|2809|
+|100|1|10000|100|765|
+|1000|1|10000|500|72506|
