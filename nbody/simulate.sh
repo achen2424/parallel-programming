@@ -4,7 +4,7 @@
 #SBATCH --time=01:00:00
 #SBATCH --mem=32G
 
-output_file="simulation_times.csv"
+output_file="simulation_times.txt"
 
 echo "9 particles (sun and 8 planets), 200 dt, 5000000 steps, 1000 log interval:" >> $output_file
 ./nbody 9 200 5000000 10000 >> $output_file

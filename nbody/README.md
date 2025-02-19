@@ -27,6 +27,9 @@ This project implements an N-Body Simulation in C++ to model the gravitational i
 ## Output Format
 Each row in solar.tsv contains:
 `num_particles   mass   x   y   z   vx   vy   vz   fx   fy   fz`
+
+## Visualization
+The solar.pdf file contains a multi-page visualization of planetary trajectories over time. To observe the motion properly, scroll down through the document to see how the planets evolve step by step.
  
 ## Benchmark Results
 The following benchmarks measure execution time for three different simulation configurations.

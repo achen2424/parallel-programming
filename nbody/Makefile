@@ -7,7 +7,7 @@ run_local:
 	./nbody 100 100 10000 1000
 
 clean:
-	rm -f nbody solar.tsv solar.pdf simulation_times.csv
+	rm -f nbody solar.tsv solar.pdf simulation_times.txt
 
 simulate:
 	sbatch simulate.sh

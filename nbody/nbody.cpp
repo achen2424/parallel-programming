@@ -148,8 +148,8 @@ int main(int argc, char* argv[]) {
     }
 
     auto stop = chrono::high_resolution_clock::now();
-    auto duration = chrono::duration_cast<chrono::seconds>(stop - start);
-    cout << "Execution time: " << duration.count() << " seconds" << endl;
+    auto duration = chrono::duration_cast<chrono::milliseconds>(stop - start);
+    cout << "Execution time: " << duration.count() << " milliseconds" << endl;
 
     file.close();
     return 0;
