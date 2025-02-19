@@ -30,7 +30,7 @@ Each row in solar.tsv contains:
  
 ## Benchmark Results
 The following benchmarks measure execution time for three different simulation configurations.
-|Configuration|Time Step (dt)|Iterations|Log Interval|Execution Times (seconds)|
+|Number of Particles|Time Step (dt)|Iterations|Log Interval|Execution Times (seconds)|
 |-|-|-|-|-|
 |9|200|5000000|1000|17|
 |100|1|10000|100|4|
