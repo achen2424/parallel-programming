@@ -15,11 +15,11 @@ This project implements an N-Body Simulation in C++ to model the gravitational i
 `make`
 - Run an example simulation locally:
 `make run_local`
-- Run on the HPC cluster:
+- Run script for the three simulation configurations on the HPC cluster:
 `make simulate`
 - Clean up generated files:
 `make clean`
-- View simulation time log:
+- View simulation time log csv:
 `make view`
 - Generate visualization:
 `make plot`
@@ -28,10 +28,10 @@ This project implements an N-Body Simulation in C++ to model the gravitational i
 Each row in solar.tsv contains:
 `num_particles   mass   x   y   z   vx   vy   vz   fx   fy   fz`
  
-## Benchmark
-9 particles (sun and 8 planets), 200 dt, 5000000 steps, 1000 log interval:\
-Execution time: 17 seconds
-100 particles, 1 dt, 10000 steps, 100 log interval:\
-Execution time: 4 seconds
-1000 particles, 1 dt, 10000 steps, 500 log interval:\
-Execution time: 413 seconds
+## Benchmark Results
+The following benchmarks measure execution time for three different simulation configurations.
+|Configuration|Time Step (dt)|Iterations|Log Interval|Execution Times (seconds)|
+|__|__|__|__|__|
+|9|200|5000000|1000|17|
+|100|1|10000|100|4|
+|1000|1|10000|500|413|
