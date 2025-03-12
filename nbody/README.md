@@ -19,7 +19,7 @@ This project implements an N-Body Simulation in C++ to model the gravitational i
 `make simulate`
 - Clean up generated files:
 `make clean`
-- View simulation time from simulation_times.csv:
+- View simulation time from simulation_times.txt:
 `make view`
 - Generate visualization:
 `make plot`

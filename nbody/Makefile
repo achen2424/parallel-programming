@@ -13,7 +13,7 @@ simulate:
 	sbatch simulate.sh
 
 view:
-	cat simulation_times.csv
+	cat simulation_times.txt
 
 plot:
 	python3 plot.py solar.tsv solar.pdf
