@@ -19,13 +19,13 @@ MacOS: `brew install curl`
 Run in HPC environment (Centaurus cluster).
 ## Compile and Run
 To compile the graph_crawler.cpp file, run:\
-`make`\
+`make`
 
 To manually run the program, use:\
-`./gc <Actor Name> <node-depth>`\
+`./gc <Actor Name> <node-depth>`
 
 To generate example test runs in txt files located in output directory, run:\
-`sbatch gc.sh`\
+`sbatch gc.sh`
 
 To remove compiled files and reset the project, run:\
 `make clean`
