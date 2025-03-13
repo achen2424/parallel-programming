@@ -1,0 +1,24 @@
+Nodes found within depth 2 from Michael Schumacher:
+Michael Schumacher
+Senna
+1
+Jackie Stewart
+Ayrton Senna
+Alain Prost
+Nigel Mansell
+Damon Hill
+Gerhard Berger
+Rubens Barrichello
+Nelson Piquet
+Bernie Ecclestone
+Riccardo Patrese
+Ron Dennis
+Frank Williams
+Sid Watkins
+Jean-Marie Balestre
+Rainier III, Prince of Mónaco
+Princess Stéphanie of Monaco
+Bussunda
+Galvão Bueno
+Michael Fassbender
+Execution time: 0.530508 seconds

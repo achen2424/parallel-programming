@@ -1,0 +1,41 @@
+Nodes found within depth 1 from Viola Davis:
+Viola Davis
+Traffic
+Kate & Leopold
+Solaris
+Far from Heaven
+Syriana
+Get Rich or Die Tryin'
+World Trade Center
+The Architect
+Disturbia
+Nights in Rodanthe
+Doubt
+State of Play
+Law Abiding Citizen
+Madea Goes to Jail
+Eat Pray Love
+Knight and Day
+It's Kind of a Funny Story
+Trust
+The Help
+Extremely Loud and Incredibly Close
+Won't Back Down
+Beautiful Creatures
+Ender's Game
+Prisoners
+The Disappearance of Eleanor Rigby
+Get on Up
+Blackhat
+Lila & Eve
+Suicide Squad
+Custody
+Fences
+Widows
+Ma Rainey's Black Bottom
+The Suicide Squad
+The Unforgivable
+Black Adam
+The Woman King
+The Hunger Games: The Ballad of Songbirds and Snakes
+Execution time: 0.178921 seconds
