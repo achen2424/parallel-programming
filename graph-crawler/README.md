@@ -12,7 +12,7 @@ git clone https://github.com/Tencent/rapidjson.git
 
 Install the libcurl library:\
 Ubunut/Debian: `sudo apt install libcurl4-openssl-dev`\
-MacOS: `brew install curl`\
+MacOS: `brew install curl`
 
 ## Compile and Run
 To compile the graph_crawler.cpp file, run\
@@ -20,4 +20,4 @@ To compile the graph_crawler.cpp file, run\
 To view generate example test runs and view output in txt files, run\
 `sbatch gc.sh`\
 To remove compiled files and reset the project, run:\
-`make clean`\
+`make clean`
