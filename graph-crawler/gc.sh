@@ -1,4 +1,8 @@
-#!/bin/bash
+#!/bin/sh
+#SBATCH --job-name=graph_crawler
+#SBATCH --partition=Centaurus
+#SBATCH --time=01:00:00
+#SBATCH --mem=32G
 make
 
 #example tests
