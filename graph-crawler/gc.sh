@@ -5,9 +5,11 @@
 #SBATCH --mem=32G
 make
 
+mkdir -p output
+
 #example tests
-./gc Michael Schumacher 2 > michael_schumacher_2.txt
-./gc Tom Hanks 3 > tom_hanks_3.txt
-./gc Emma Watson 1 > emma_watson_1.txt
+./gc "Michael Schumacher" 2 > output/michael_schumacher_2.txt
+./gc "Tom Hanks" 3 > output/tom_hanks_2.txt
+./gc "Viola Davis" 1 > output/viola_davis_1.txt
 
 echo "Test runs completed."
