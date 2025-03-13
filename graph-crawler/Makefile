@@ -11,4 +11,4 @@ graph_crawler.o: graph_crawler.cpp
 	$(CXX) $(CXXFLAGS) -c graph_crawler.cpp
 
 clean:
-	rm -f *.o gc *.txt
+	rm -f *.o gc *.txt *.out
