@@ -2,13 +2,15 @@
 #include <vector>
 #include <queue>
 #include <string>
-#include <map>
 #include <algorithm>
 #include <curl/curl.h>
 #include <rapidjson/document.h>
+#include <chrono>
 using namespace std;
 using namespace rapidjson;
+using namespace chrono;
 
+//store HTTP response in string
 size_t my_write_data(char* ptr, size_t size, size_t nmemb, void* userdata) {
     size_t total_size = size * nmemb;
     string* mystring = static_cast<string*>(userdata);
@@ -16,34 +18,32 @@ size_t my_write_data(char* ptr, size_t size, size_t nmemb, void* userdata) {
     return total_size;
 }
 
-string encode_spaces(const string& str) {
-    string encoded;
-    for (char c : str) {
+//encode spaces in string for URL format
+string encode_spaces(const string& mystring) {
+    string newstring;
+    for (char c : mystring) {
         if (c == ' ')
-            encoded += "%20";
+            newstring += "%20";
         else
-            encoded += c;
+            newstring += c;
     }
-    return encoded;
+    return newstring;
 }
 
+//fetch neighbors of given node using web api
 vector<string> get_neighbors(const string& node) {
     CURL* curl = curl_easy_init();
     string response;
 
-    if (!curl) {
-        cerr << "Failed to initialize curl\n";
-        return {};
-    }
-    
     string encoded_node = encode_spaces(node);
     string url = "http://hollywood-graph-crawler.bridgesuncc.org/neighbors/" + encoded_node;
     
+    //set curl options
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, my_write_data);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void*)&response);
     
-
+    //perform GET request
     CURLcode res = curl_easy_perform(curl);
     if (res != CURLE_OK) {
         cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << "\n";
@@ -53,7 +53,6 @@ vector<string> get_neighbors(const string& node) {
 
     curl_easy_cleanup(curl);
 
-    // Parse JSON using RapidJSON
     vector<string> neighbors;
     Document doc;
     
@@ -62,6 +61,7 @@ vector<string> get_neighbors(const string& node) {
         return {};
     }
 
+    //extract neighbors
     if (doc.HasMember("neighbors") && doc["neighbors"].IsArray()) {
     for (const auto& val : doc["neighbors"].GetArray()) {
         if (val.IsString()) {
@@ -72,6 +72,7 @@ vector<string> get_neighbors(const string& node) {
     return neighbors;
 }
 
+//breadth first search to the given depth, returns reachable nodes
 vector<string> bfs(const string& start, int depth) {
     queue<pair<string, int>> q;
     vector<string> visited;
@@ -100,24 +101,32 @@ vector<string> bfs(const string& start, int depth) {
 
 int main(int argc, char* argv[]) {
     if (argc < 3) {
-        cerr << "Usage: " << argv[0] << " <start_node (may have spaces)> <depth>" << endl;
+        cerr << "Make sure to include all arguments: " << argv[0] << " <start_node (may have spaces)> <depth>" << endl;
         return 1;
     }
 
-    // Combine all arguments except the last one into the name
     string start;
-    for (int i = 1; i < argc - 1; ++i) {
-        start += argv[i];
-        if (i != argc - 2) start += " ";  // add space between words
+    if (argc == 3) {
+        start = argv[1];
+    } else if (argc == 4) {
+        start = string(argv[1]) + " " + argv[2];
     }
 
     int depth = stoi(argv[argc - 1]);
 
+    auto begin = high_resolution_clock::now();
+
     vector<string> result = bfs(start, depth);
+
+    auto end = high_resolution_clock::now();
+    chrono::duration<double> elapsed = end - begin;
+
     cout << "Nodes found within depth " << depth << " from " << start << ":" << endl;
     for (const string& node : result) {
         cout << node << endl;
     }
+
+    cout << "Execution time: " << elapsed.count() << " seconds" << endl;
 
     return 0;
 }
