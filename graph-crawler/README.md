@@ -15,9 +15,11 @@ Ubunut/Debian: `sudo apt install libcurl4-openssl-dev`\
 MacOS: `brew install curl`
 
 ## Compile and Run
-To compile the graph_crawler.cpp file, run\
+To compile the graph_crawler.cpp file, run:\
 `make`\
-To view generate example test runs and view output in txt files, run\
+To manually run the program, run:\
+`./gc <Actor Name> <node-depth>`\
+To generate example test runs and view output in txt files, run:\
 `sbatch gc.sh`\
 To remove compiled files and reset the project, run:\
 `make clean`
