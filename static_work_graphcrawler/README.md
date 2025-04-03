@@ -22,4 +22,5 @@ To compile the program, run: `make`\
 To execute the program: `./level_client "<Actor Name>" <depth>`\
 Example: `./level_client "Tom Hanks" 2`\
 This command finds all connections within 2 levels from "Tom Hanks".\
+To run the script in HPC environment, use: `sbatch lc.sh`\
 To clean up compiled files: `make clean`
