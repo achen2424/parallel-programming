@@ -1,4 +1,4 @@
-CXXFLAGS=-std=c++11 -I/path/to/rapidjson
+CXXFLAGS=-std=c++11 -I ~/rapidjson/include
 LDFLAGS=-lcurl -lpthread
 LD=g++
 CC=g++
