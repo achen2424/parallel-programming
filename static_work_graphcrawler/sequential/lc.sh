@@ -1,5 +1,5 @@
 #!/bin/sh
-#SBATCH --job-name=graph_crawler
+#SBATCH --job-name=level_client
 #SBATCH --partition=Centaurus
 #SBATCH --time=01:00:00
 #SBATCH --mem=32G
