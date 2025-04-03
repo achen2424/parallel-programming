@@ -11,4 +11,4 @@ level_client: level_client.o
 
 
 clean:
-	-rm level_client level_client.o output
+	-rm level_client level_client.o *.out
