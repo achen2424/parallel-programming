@@ -3,12 +3,9 @@ LDFLAGS=-lcurl -lpthread
 LD=g++
 CC=g++
 
-all: level_client par_level_client
+all: level_client
 
 level_client: level_client.o
-	$(LD) $< -o $@ $(LDFLAGS)
-
-par_level_client: par_level_client.o
 	$(LD) $< -o $@ $(LDFLAGS)
 
 clean:
