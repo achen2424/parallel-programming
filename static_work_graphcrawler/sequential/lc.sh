@@ -8,8 +8,8 @@ make
 mkdir -p output
 
 #example tests
-./par_level_client "Michael Schumacher" 2 > output/PAR_michael_schumacher_2.txt
-./level_client "Michael Schumacher" 2 > output/SEQ_michael_schumacher_2.txt
+./par_level_client "Michael Schumacher" 3 > output/PAR_michael_schumacher_3.txt
+./level_client "Michael Schumacher" 3 > output/SEQ_michael_schumacher_3.txt
 ./par_level_client "Tom Hanks" 1 > output/PAR_tom_hanks_1.txt
 ./level_client "Tom Hanks" 1 > output/SEQ_tom_hanks_1.txt
 ./par_level_client "Viola Davis" 2 > output/PAR_viola_davis_2.txt
