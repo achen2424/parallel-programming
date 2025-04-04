@@ -8,9 +8,6 @@
 #include <stdexcept>
 #include "rapidjson/error/error.h"
 #include "rapidjson/reader.h"
-#include <mutex>
-#include <thread>
-#include <vector>
 
 struct ParseException : std::runtime_error, rapidjson::ParseResult
 {
@@ -31,8 +28,6 @@ bool debug = false;
 
 // Updated service URL
 const string SERVICE_URL = "http://hollywood-graph-crawler.bridgesuncc.org/neighbors/";
-const int MAX_THREADS = 8;
-mutex mtx;
 
 // Function to HTTP ecnode parts of URLs. for instance, replace spaces with '%20' for URLs
 string url_encode(CURL *curl, string input)
@@ -121,7 +116,6 @@ vector<vector<string>> bfs(CURL *curl, const string &start, int depth)
 {
   vector<vector<string>> levels;
   unordered_set<string> visited;
-  mutex visited_mutex;
 
   levels.push_back({start});
   visited.insert(start);
@@ -130,59 +124,30 @@ vector<vector<string>> bfs(CURL *curl, const string &start, int depth)
   {
     if (debug)
       std::cout << "starting level: " << d << "\n";
-
     levels.push_back({});
-    vector<thread> threads;
     for (string &s : levels[d])
     {
-      threads.emplace_back([&, s]()
-                           {
-                             CURL *thread_curl = curl_easy_init(); // each thread has its own curl
-                             if (!thread_curl)
-                             {
-                               std::cerr << "CURL error: Failed initialization" << std::endl;
-                               return;
-                             }
-
-                             try
-                             {
-                               if (debug)
-                                 std::cout << "Trying to expand " << s << "\n";
-
-                               string json_response = fetch_neighbors(thread_curl, s);
-
-                               vector<string> neighbors = get_neighbors(json_response);
-
-                               {
-                                 lock_guard<mutex> lock(visited_mutex); // lock when modifying visited
-                                 for (const auto &neighbor : neighbors)
-                                 {
-                                   if (!visited.count(neighbor))
-                                   {
-                                     visited.insert(neighbor);
-                                     levels[d + 1].push_back(neighbor);
-                                   }
-                                 }
-                               }
-                             }
-                             catch (const ParseException &e)
-                             {
-                               std::cerr << "Error while fetching neighbors of: " << s << std::endl;
-                             }
-
-                             curl_easy_cleanup(thread_curl); // cleanup curl
-                           });
-
-      if (threads.size() >= MAX_THREADS)
-      { // join threads
-        for (auto &t : threads)
-          t.join();
-        threads.clear();
+      try
+      {
+        if (debug)
+          std::cout << "Trying to expand" << s << "\n";
+        for (const auto &neighbor : get_neighbors(fetch_neighbors(curl, s)))
+        {
+          if (debug)
+            std::cout << "neighbor " << neighbor << "\n";
+          if (!visited.count(neighbor))
+          {
+            visited.insert(neighbor);
+            levels[d + 1].push_back(neighbor);
+          }
+        }
+      }
+      catch (const ParseException &e)
+      {
+        std::cerr << "Error while fetching neighbors of: " << s << std::endl;
+        throw e;
       }
     }
-
-    for (auto &t : threads) // join remaining threads
-      t.join();
   }
 
   return levels;
