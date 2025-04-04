@@ -31,3 +31,6 @@ Text files are generated in the output directory. Files starting with PAR_ conta
 Example filenames:\
 `PAR_tom_hanks_2.txt`\
 `SEQ_tom_hanks_2.txt`
+
+## Conclusion
+By testing various actors at different traversal depths, the parallel version of the program generally demonstrates faster execution times compared to the sequential version, especially as the depth increases and the number of nodes to process grows. This is due to multithreading allowing concurrent expansion of neighbors at each BFS level, reducing wait time for API responses. While the sequential version is simpler, the performance gains from the parallel approach highlight the advantages of concurrent processing in large graph traversals.
