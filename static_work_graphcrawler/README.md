@@ -5,7 +5,7 @@ This project implements Breadth-First Search (BFS) using a web-based API to expl
 - Parallel BFS traversal expands nodes concurrently up to a specified depth.
 - Execution times are recorded, and all visited nodes are displayed.
 - Error handling ensures robustness against failed HTTP requests or API errors.
-- Results are outputted to text files, listing all nodes in the specified depth and total execution time.
+- Results are outputted to text files in the output directory, listing all nodes in the specified depth and total execution time.
 ## Required Installations
 To run this project, install RapidJSON and the libcurl library.
 
@@ -18,9 +18,9 @@ MacOS: `brew install curl`
 
 Run in HPC environment (Centaurus cluster).
 ## Compile and Run
+To run the script in HPC environment, use: `sbatch lc.sh`\
 To compile the program, run: `make`\
 To execute the program: `./level_client "<Actor Name>" <depth>`\
 Example: `./level_client "Tom Hanks" 2`\
 This command finds all connections within 2 levels from "Tom Hanks".\
-To run the script in HPC environment, use: `sbatch lc.sh`\
 To clean up compiled files: `make clean`
