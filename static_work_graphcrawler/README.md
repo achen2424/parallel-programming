@@ -19,8 +19,15 @@ MacOS: `brew install curl`
 Run in HPC environment (Centaurus cluster).
 ## Compile and Run
 To run the script in HPC environment, use: `sbatch lc.sh`\
+This command will compile and run the code, updating the txt files in output.
 To compile the program, run: `make`\
 To execute the program: `./level_client "<Actor Name>" <depth>`\
 Example: `./level_client "Tom Hanks" 2`\
 This command finds all connections within 2 levels from "Tom Hanks".\
 To clean up compiled files: `make clean`
+
+## Output Files
+Text files are generated in the output directory. Files starting with PAR_ contain results from the parallel BFS version, including the list of visited nodes and execution time. Files starting with SEQ_ contain results from the sequential BFS version, also including visited nodes and execution time.\
+Example filenames:\
+`PAR_tom_hanks_2.txt`\
+`SEQ_tom_hanks_2.txt`
