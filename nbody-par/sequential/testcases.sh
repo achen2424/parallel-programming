@@ -5,7 +5,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem=4G
-#SBATCH --output=result.txt
+#SBATCH --output=output.txt
 
 #test case 1: 10 bodies, 1 step, 10,000 timesteps
 echo "Running parallel version for 10 bodies, 1 step, 10,000 timesteps"
