@@ -1,4 +1,4 @@
-CXXFLAGS=-O3
+CXXFLAGS=-O3 -fopenmp -I/usr/local/opt/libomp/include -L/usr/local/opt/libomp/lib
 
 nbody: nbody.cpp
 	g++ -O3 nbody.cpp -o nbody
