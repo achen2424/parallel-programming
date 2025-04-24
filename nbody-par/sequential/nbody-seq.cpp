@@ -2,6 +2,8 @@
 #include <fstream>
 #include <random>
 #include <cmath>
+#include <vector>
+#include <chrono>
 
 double G = 6.674*std::pow(10,-11);
 //double G = 1;
@@ -211,7 +213,8 @@ int main(int argc, char* argv[]) {
     }    
   }
 
-  
+  auto start = std::chrono::high_resolution_clock::now();
+
   for (size_t step = 0; step< nbstep; step++) {
     if (step %printevery == 0)
       dump_state(s);
@@ -228,6 +231,10 @@ int main(int argc, char* argv[]) {
     }
   }
   
+  auto stop = std::chrono::high_resolution_clock::now();
+  auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
+  std::cerr << "Execution time: " << duration.count() << " milliseconds\n";
+    
   //dump_state(s);  
 
 
