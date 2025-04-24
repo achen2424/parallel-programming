@@ -10,4 +10,3 @@ module load gcc
 
 make nbody-par  
 make solar-par.out
-make solar-par.pdf

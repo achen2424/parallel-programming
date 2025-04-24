@@ -10,4 +10,3 @@ module load gcc
 
 make nbody-seq
 make solar-seq.out
-make solar-seq.pdf
