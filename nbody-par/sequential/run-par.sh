@@ -1,5 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=nbody-par
+#SBATCH --partition=Centaurus
 #SBATCH --output=nbody-par.log
 #SBATCH --time=00:10:00
 #SBATCH --mem=2G

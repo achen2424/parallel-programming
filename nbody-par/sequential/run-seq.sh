@@ -1,5 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=nbody-seq
+#SBATCH --partition=Centaurus
 #SBATCH --output=nbody-seq.log
 #SBATCH --time=00:10:00
 #SBATCH --mem=2G
