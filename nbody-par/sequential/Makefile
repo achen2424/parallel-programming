@@ -1,17 +1,40 @@
-CXXFLAGS=-O3 -fopenmp -I/usr/local/opt/libomp/include -L/usr/local/opt/libomp/lib
+CXX = g++
+CXXFLAGS = -O3 -std=c++11
+LDFLAGS = -fopenmp
 
-nbody: nbody.cpp
-	g++ -O3 nbody.cpp -o nbody
+nbody-seq: nbody-seq.cpp
+	$(CXX) $(CXXFLAGS) $< -o 
 
-solar.out: nbody
+nbody-par: nbody-par.cpp
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $< -o $@
+
+all: nbody-seq nbody-par
+
+#solar system outputs
+solar-seq.out: nbody-seq
 	date
-	./nbody planet 200 5000000 10000 > solar.out # maybe a minutes
+	./nbody-seq planet 200 5000000 10000 > solar-seq.out
 	date
 
-solar.pdf: solar.out
-	python3 plot.py solar.out solar.pdf 1000 
-
-random.out: nbody
+solar-par.out: nbody-par
 	date
-	./nbody 1000 1 10000 100 > random.out # maybe 5 minutes
+	OMP_NUM_THREADS=4 ./nbody-par planet 200 5000000 10000 > solar-par.out
+	date
+
+#pdf generation
+solar-seq.pdf: solar-seq.out
+	python3 plot.py solar-seq.out solar-seq.pdf 1000
+
+solar-par.pdf: solar-par.out
+	python3 plot.py solar-par.out solar-par.pdf 1000
+
+#random particle ouputs
+random-seq.out: nbody-seq
+	date
+	./nbody-seq 1000 1 10000 100 > random-seq.out
+	date
+
+random-par.out: nbody-par
+	date
+	OMP_NUM_THREADS=4 ./nbody-par 1000 1 10000 100 > random-par.out
 	date
