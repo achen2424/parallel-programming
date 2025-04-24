@@ -1,4 +1,4 @@
-CXX = g++-14
+CXX = g++-13
 CXXFLAGS = -O3 -std=c++11
 LDFLAGS = -fopenmp
 
