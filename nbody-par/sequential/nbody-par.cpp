@@ -131,11 +131,11 @@ void compute_forces(simulation& s) {
   std::vector<std::vector<double>> fz_private(omp_get_max_threads(), 
                                             std::vector<double>(s.nbpart, 0.0));
 
-  #pragma omp parallel
+  #pragma omp parallel if(s.nbpart > 50) 
   {
     int tid = omp_get_thread_num();
     
-    #pragma omp for schedule(static)
+    #pragma omp for schedule(dynamic, 16)
     for (size_t i = 0; i < s.nbpart; ++i) {
       for (size_t j = i+1; j < s.nbpart; ++j) {
         double dx = s.x[j] - s.x[i];
