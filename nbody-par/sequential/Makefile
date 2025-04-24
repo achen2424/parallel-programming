@@ -3,7 +3,7 @@ CXXFLAGS = -O3 -std=c++11
 LDFLAGS = -fopenmp
 
 nbody-seq: nbody-seq.cpp
-	$(CXX) $(CXXFLAGS) $< -o 
+	$(CXX) $(CXXFLAGS) $< -o $@
 
 nbody-par: nbody-par.cpp
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $< -o $@
