@@ -19,7 +19,7 @@ echo "---Test Case 2: 100 bodies, dt=300s, 50,000 steps, print every 500---" >> 
 echo "Parallel version:" >> timing.txt
 ./nbody-par 100 3000 50000 500 > sim-par-2.out 2>> timing.txt
 echo "Sequential version:" >> timing.txt
-./nbody-seq 100 300 50000 500 > sim-seq-2.out 2>> timing.txt
+./nbody-seq 100 3000 50000 500 > sim-seq-2.out 2>> timing.txt
 echo "" >> timing.txt
 
 echo "---Test Case 3: Solar system, dt=200s, 5,000,000 steps, print every 10,000---" >> timing.txt
