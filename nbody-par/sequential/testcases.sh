@@ -6,6 +6,8 @@
 #SBATCH --output=output.txt
 #SBATCH --error=timing.txt
 
+make all
+
 echo "---Test Case 1: 10 bodies, 1 step, 10,000 timesteps---" >> timing.txt
 echo "Parallel version:" >> timing.txt
 ./nbody-par 10 1 10000 100 > sim-par-1.out 2>> timing.txt
