@@ -38,3 +38,6 @@ random-par.out: nbody-par
 	date
 	OMP_NUM_THREADS=4 ./nbody-par 1000 1 10000 100 > random-par.out
 	date
+
+clean:
+	rm -f nbody-seq nbody-par *.out *.pdf
