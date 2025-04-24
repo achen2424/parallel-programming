@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -O3 -std=c++11
+CXXFLAGS = -O3 -march=native -std=c++11
 LDFLAGS = -fopenmp
 
 nbody-seq: nbody-seq.cpp
