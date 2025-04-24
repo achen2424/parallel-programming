@@ -1,0 +1,11 @@
+---Test Case 1: 5 bodies, dt=300s, 5,000,000 steps, print every 10,000---
+Parallel version:
+Execution time: 20402 milliseconds
+
+---Test Case 2: 100 bodies, dt=300s, 50,000 steps, print every 500---
+Parallel version:
+Execution time: 1961 milliseconds
+
+---Test Case 3: Solar system, dt=200s, 5,000,000 steps, print every 10,000---
+Parallel version:
+Execution time: 21957 milliseconds
