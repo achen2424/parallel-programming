@@ -2,33 +2,34 @@
 #include <fstream>
 #include <random>
 #include <cmath>
+#include <cuda_runtime.h>
 
 double G = 6.674*std::pow(10,-11);
 //double G = 1;
 
 struct simulation {
   size_t nbpart;
-  
-  std::vector<double> mass;
+  //change std::vector to pointers for cuda
+  double* mass;
 
   //position
-  std::vector<double> x;
-  std::vector<double> y;
-  std::vector<double> z;
+  double* x;
+  double* y;
+  double* z;
 
   //velocity
-  std::vector<double> vx;
-  std::vector<double> vy;
-  std::vector<double> vz;
+  double* vx;
+  double* vy;
+  double* vz;
 
   //force
-  std::vector<double> fx;
-  std::vector<double> fy;
-  std::vector<double> fz;
+  double * fx;
+  double* fy;
+  double* fz;
 
   
   simulation(size_t nb)
-    :nbpart(nb), mass(nb),
+    :nbpart(nb) { mass(nb),
      x(nb), y(nb), z(nb),
      vx(nb), vy(nb), vz(nb),
      fx(nb), fy(nb), fz(nb) 
