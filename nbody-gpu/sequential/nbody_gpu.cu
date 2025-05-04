@@ -5,23 +5,25 @@
 #include <cuda_runtime.h>
 #include <chrono>
 
-#define CHECK_CUDA_ERROR(call) { \
-  cudaError_t err = call; \
-  if (err != cudaSuccess) { \
-      std::cerr << "CUDA error at " << __FILE__ << ":" << __LINE__ << ": " \
-                << cudaGetErrorString(err) << std::endl; \
-      exit(EXIT_FAILURE); \
-  } \
-}
+#define CHECK_CUDA_ERROR(call) \
+do { \
+    cudaError_t err = (call); \
+    if (err != cudaSuccess) { \
+        std::cerr << "CUDA error at " << __FILE__ << ":" << __LINE__ << ": " \
+                  << cudaGetErrorString(err) << std::endl; \
+        exit(EXIT_FAILURE); \
+    } \
+} while(0)
 
-#define CHECK_KERNEL_ERROR() { \
-  cudaError_t err = cudaGetLastError(); \
-  if (err != cudaSuccess) { \
-      std::cerr << "Kernel error at " << __FILE__ << ":" << __LINE__ << ": " \
-                << cudaGetErrorString(err) << std::endl; \
-      exit(EXIT_FAILURE); \
-  } \
-}
+#define CHECK_KERNEL_ERROR() \
+do { \
+    cudaError_t err = cudaGetLastError(); \
+    if (err != cudaSuccess) { \
+        std::cerr << "Kernel error at " << __FILE__ << ":" << __LINE__ << ": " \
+                  << cudaGetErrorString(err) << std::endl; \
+        exit(EXIT_FAILURE); \
+    } \
+} while(0)
 
 
 double G = 6.674*std::pow(10,-11);
@@ -110,6 +112,7 @@ struct simulation {
     CHECK_CUDA_ERROR(cudaFree(dfy));
     CHECK_CUDA_ERROR(cudaFree(dfz));
   }
+};
 
   //copy from host to device
 void copy_to_device() {
