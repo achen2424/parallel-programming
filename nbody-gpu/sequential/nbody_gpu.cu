@@ -3,6 +3,9 @@
 #include <random>
 #include <cmath>
 #include <cuda_runtime.h>
+#include <chrono>
+#include <string>
+#include <cstdlib>
 
 double G = 6.674*std::pow(10,-11);
 //double G = 1;
@@ -315,13 +318,8 @@ int main(int argc, char* argv[]) {
   }
 
   int numBlocks = (s.nbpart + blockSize - 1) / blockSize;
-  cudaEvent_t start, stop;
-  float milliseconds = 0;
-  
-  cudaEventCreate(&start);
-  cudaEventCreate(&stop);
-  
-  cudaEventRecord(start);
+
+  auto start = std::chrono::high_resolution_clock::now();
   for (size_t step = 0; step< nbstep; step++) {
     /*if (step %printevery == 0) {
       s.copy_from_device();
@@ -331,14 +329,14 @@ int main(int argc, char* argv[]) {
   update_particles_kernel<<<numBlocks, blockSize>>>(s.dx, s.dy, s.dz, s.dvx, s.dvy, s.dvz, s.dfx, s.dfy, s.dfz, s.dmass, s.nbpart, dt);
   }
   cudaDeviceSynchronize();
-  cudaEventRecord(stop);
-  cudaEventSynchronize(stop);
-
-  cudaEventElapsedTime(&milliseconds, start, stop);
-  printf("GPU Time: %f ms\n", milliseconds);
-
-  cudaEventDestroy(start);
-  cudaEventDestroy(stop);
+  cudaError_t err = cudaGetLastError();
+  if (err != cudaSuccess) {
+    std::cerr << "CUDA error: " << cudaGetErrorString(err) << "\n";
+    return -1;
+  }
+  auto end = std::chrono::high_resolution_clock::now();
+  std::chrono::duration<double> elapsed = end - start;
+  std::cout << "GPU Time: " << elapsed.count() << " s\n";
   
   //s.copy_from_device();
   //dump_state(s);  
