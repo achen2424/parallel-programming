@@ -51,16 +51,10 @@ struct simulation {
   double* hfz;
 
   //device
-  CHECK_CUDA_ERROR(cudaMalloc(&dmass, nb * sizeof(double)));
-  CHECK_CUDA_ERROR(cudaMalloc(&dx, nb * sizeof(double)));
-  CHECK_CUDA_ERROR(cudaMalloc(&dy, nb * sizeof(double)));
-  CHECK_CUDA_ERROR(cudaMalloc(&dz, nb * sizeof(double)));
-  CHECK_CUDA_ERROR(cudaMalloc(&dvx, nb * sizeof(double)));
-  CHECK_CUDA_ERROR(cudaMalloc(&dvy, nb * sizeof(double)));
-  CHECK_CUDA_ERROR(cudaMalloc(&dvz, nb * sizeof(double)));
-  CHECK_CUDA_ERROR(cudaMalloc(&dfx, nb * sizeof(double)));
-  CHECK_CUDA_ERROR(cudaMalloc(&dfy, nb * sizeof(double)));
-  CHECK_CUDA_ERROR(cudaMalloc(&dfz, nb * sizeof(double))));
+  double* dmass;
+  double* dx, *dy, *dz;
+  double* dvx, *dvy, *dvz;
+  double* dfx, *dfy, *dfz
 
   simulation(size_t nb) : nbpart(nb) {
     //host memory
@@ -112,7 +106,6 @@ struct simulation {
     CHECK_CUDA_ERROR(cudaFree(dfy));
     CHECK_CUDA_ERROR(cudaFree(dfz));
   }
-};
 
   //copy from host to device
 void copy_to_device() {
