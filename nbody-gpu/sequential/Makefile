@@ -1,17 +1,15 @@
-CXXFLAGS=-O3
+NVCC = nvcc
+NVCC_FLAGS = -O3 -arch=sm_61
+EXEC = nbody_gpu
 
-nbody: nbody.cpp
-	g++ -O3 nbody.cpp -o nbody
+all: $(EXEC)
 
-solar.out: nbody
-	date
-	./nbody planet 200 5000000 10000 > solar.out # maybe a minutes
-	date
+$(EXEC): nbody.cpp
+	$(NVCC) $(NVCC_FLAGS) nbody.cpp -o $(EXEC)
 
-solar.pdf: solar.out
-	python3 plot.py solar.out solar.pdf 1000 
+test: $(EXEC)
+	chmod +x run_tests.sh
+	./run_tests.sh
 
-random.out: nbody
-	date
-	./nbody 1000 1 10000 100 > random.out # maybe 5 minutes
-	date
+clean:
+	rm -f $(EXEC) test_results.txt
