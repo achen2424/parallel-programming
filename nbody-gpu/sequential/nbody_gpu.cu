@@ -54,7 +54,7 @@ struct simulation {
   double* dmass;
   double* dx, *dy, *dz;
   double* dvx, *dvy, *dvz;
-  double* dfx, *dfy, *dfz
+  double* dfx, *dfy, *dfz;
 
   simulation(size_t nb) : nbpart(nb) {
     //host memory
@@ -326,19 +326,22 @@ int main(int argc, char* argv[]) {
   int blockSize = std::atol(argv[5]);
   
   
-  simulation s(1);
+  simulation* s = new simulation(1);
 
   //parse command line
   {
     size_t nbpart = std::atol(argv[1]); //return 0 if not a number
     if ( nbpart > 0) {
+      delete s;
       s = simulation(nbpart);
-      random_init(s);
+      random_init(*s);
     } else {
       std::string inputparam = argv[1];
       if (inputparam == "planet") {
 	init_solar(s);
       } else{
+        delete s;
+        s = new simulation(0); 
 	loadfrom_file(s, inputparam);
       }
     }    
@@ -365,7 +368,7 @@ int main(int argc, char* argv[]) {
   
   //s.copy_from_device();
   //dump_state(s);  
-
+  delete s;
 
   return 0;
 }
