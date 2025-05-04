@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=yourprogramname
+#SBATCH --job-name=nbody-cuda
 #SBATCH --partition=GPU
 #SBATCH --time=00:10:00
 #SBATCH --nodes=1
