@@ -11,7 +11,7 @@ all: $(EXEC_GPU) $(EXEC_CPU)
 $(EXEC_GPU): nbody_gpu.cu
 	$(NVCC) $(NVCC_FLAGS) $< -o $@
 
-$(EXEC_CPU): nbody-original.cpp
+$(EXEC_CPU): nbody_cpu.cpp
 	$(CXX) $(CXXFLAGS) $< -o $@
 
 clean:
