@@ -6,7 +6,7 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --gres=gpu:1
 
-module load cuda/12.4
+module load cuda/12.1
 > output.txt
 
 OUTPUT="output.txt"
