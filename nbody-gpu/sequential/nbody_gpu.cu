@@ -108,28 +108,30 @@ struct simulation {
   }
 
   //copy from host to device
-void copy_to_device() {
-  CHECK_CUDA_ERROR(cudaMemcpy(dmass, hmass, nbpart * sizeof(double), cudaMemcpyHostToDevice));
-  CHECK_CUDA_ERROR(cudaMemcpy(dx, hx, nbpart * sizeof(double), cudaMemcpyHostToDevice));
-  CHECK_CUDA_ERROR(cudaMemcpy(dy, hy, nbpart * sizeof(double), cudaMemcpyHostToDevice));
-  CHECK_CUDA_ERROR(cudaMemcpy(dz, hz, nbpart * sizeof(double), cudaMemcpyHostToDevice));
-  CHECK_CUDA_ERROR(cudaMemcpy(dvx, hvx, nbpart * sizeof(double), cudaMemcpyHostToDevice));
-  CHECK_CUDA_ERROR(cudaMemcpy(dvy, hvy, nbpart * sizeof(double), cudaMemcpyHostToDevice));
-  CHECK_CUDA_ERROR(cudaMemcpy(dvz, hvz, nbpart * sizeof(double), cudaMemcpyHostToDevice));
-}
+  void copy_to_device() {
+    CHECK_CUDA_ERROR(cudaMemcpy(dmass, hmass, nbpart * sizeof(double), cudaMemcpyHostToDevice));
+    CHECK_CUDA_ERROR(cudaMemcpy(dx, hx, nbpart * sizeof(double), cudaMemcpyHostToDevice));
+    CHECK_CUDA_ERROR(cudaMemcpy(dy, hy, nbpart * sizeof(double), cudaMemcpyHostToDevice));
+    CHECK_CUDA_ERROR(cudaMemcpy(dz, hz, nbpart * sizeof(double), cudaMemcpyHostToDevice));
+    CHECK_CUDA_ERROR(cudaMemcpy(dvx, hvx, nbpart * sizeof(double), cudaMemcpyHostToDevice));
+    CHECK_CUDA_ERROR(cudaMemcpy(dvy, hvy, nbpart * sizeof(double), cudaMemcpyHostToDevice));
+    CHECK_CUDA_ERROR(cudaMemcpy(dvz, hvz, nbpart * sizeof(double), cudaMemcpyHostToDevice));
+  }
 
-//copy from device to host
-void copy_from_device() {
-  CHECK_CUDA_ERROR(cudaMemcpy(hx, dx, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
-  CHECK_CUDA_ERROR(cudaMemcpy(hy, dy, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
-  CHECK_CUDA_ERROR(cudaMemcpy(hz, dz, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
-  CHECK_CUDA_ERROR(cudaMemcpy(hvx, dvx, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
-  CHECK_CUDA_ERROR(cudaMemcpy(hvy, dvy, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
-  CHECK_CUDA_ERROR(cudaMemcpy(hvz, dvz, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
-  CHECK_CUDA_ERROR(cudaMemcpy(hfx, dfx, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
-  CHECK_CUDA_ERROR(cudaMemcpy(hfy, dfy, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
-  CHECK_CUDA_ERROR(cudaMemcpy(hfz, dfz, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
-}
+  //copy from device to host
+  void copy_from_device() {
+    CHECK_CUDA_ERROR(cudaMemcpy(hx, dx, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
+    CHECK_CUDA_ERROR(cudaMemcpy(hy, dy, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
+    CHECK_CUDA_ERROR(cudaMemcpy(hz, dz, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
+    CHECK_CUDA_ERROR(cudaMemcpy(hvx, dvx, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
+    CHECK_CUDA_ERROR(cudaMemcpy(hvy, dvy, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
+    CHECK_CUDA_ERROR(cudaMemcpy(hvz, dvz, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
+    CHECK_CUDA_ERROR(cudaMemcpy(hfx, dfx, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
+    CHECK_CUDA_ERROR(cudaMemcpy(hfy, dfy, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
+    CHECK_CUDA_ERROR(cudaMemcpy(hfz, dfz, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
+  }
+
+};
 
 void random_init(simulation& s) {
   std::random_device rd;  
