@@ -7,14 +7,10 @@ EXEC_CPU = nbody_cpu
 
 all: $(EXEC_GPU) $(EXEC_CPU)
 
-$(EXEC_GPU): nbody.cpp
+$(EXEC_GPU): nbody_gpu.cpp
 	$(NVCC) $(NVCC_FLAGS) $< -o $@
-$(EXEC_CPU): nbody-original.cpp
+$(EXEC_CPU): nbody_cpu.cpp
 	$(CXX) $(CXXFLAGS) $< -o $@
-
-test: $(EXEC_GPU) $(EXEC_CPU)
-	chmod +x run_tests.sh
-	./run_tests.sh
 
 clean:
 	rm -f $(EXEC_GPU) $(EXEC_CPU)
