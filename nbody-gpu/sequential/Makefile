@@ -15,4 +15,4 @@ $(EXEC_CPU): nbody_cpu.cpp
 	$(CXX) $(CXXFLAGS) $< -o $@
 
 clean:
-	rm -f $(EXEC_GPU) $(EXEC_CPU)
+	rm -f $(EXEC_GPU) $(EXEC_CPU) *.out

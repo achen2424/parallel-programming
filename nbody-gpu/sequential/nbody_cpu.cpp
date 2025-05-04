@@ -214,8 +214,8 @@ int main(int argc, char* argv[]) {
 
   auto start = std::chrono::high_resolution_clock::now();
   for (size_t step = 0; step< nbstep; step++) {
-    if (step %printevery == 0)
-      dump_state(s);
+    /*if (step %printevery == 0)
+      dump_state(s);*/
   
     reset_force(s);
     for (size_t i=0; i<s.nbpart; ++i)

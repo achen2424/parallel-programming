@@ -319,10 +319,9 @@ int main(int argc, char* argv[]) {
 
   auto start = std::chrono::high_resolution_clock::now();
   for (size_t step = 0; step< nbstep; step++) {
-    if (step %printevery == 0) {
+    /*if (step %printevery == 0) {
       s.copy_from_device();
-      dump_state(s);
-    }
+    }*/
   reset_force_kernel<<<numBlocks, blockSize>>>(s.dfx, s.dfy, s.dfz, s.nbpart);
   compute_force_kernel<<<numBlocks, blockSize>>>(s.dmass, s.dx, s.dy, s.dz, s.dfx, s.dfy, s.dfz, s.nbpart, G);
   update_particles_kernel<<<numBlocks, blockSize>>>(s.dx, s.dy, s.dz, s.dvx, s.dvy, s.dvz, s.dfx, s.dfy, s.dfz, s.dmass, s.nbpart, dt);
@@ -332,8 +331,8 @@ int main(int argc, char* argv[]) {
   std::chrono::duration<double> elapsed = end - start;
   std::cout << "GPU Time: " << elapsed.count() << " s\n";
   
-  s.copy_from_device();
-  dump_state(s);  
+  //s.copy_from_device();
+  //dump_state(s);  
 
 
   return 0;
