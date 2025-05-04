@@ -3,6 +3,7 @@
 #include <random>
 #include <cmath>
 #include <cuda_runtime.h>
+#include <chrono>
 
 double G = 6.674*std::pow(10,-11);
 //double G = 1;
@@ -159,7 +160,7 @@ void init_solar(simulation& s) {
 
   // Positions (in meters) and velocities (in m/s)
   double AU = 1.496 * std::pow(10, 11); // Astronomical Unit
-  
+
   s.hx[SUN] = 0; s.hy[SUN] = 0; s.hz[SUN] = 0;
   s.hx[MERCURY] = 0.39*AU; s.hy[MERCURY] = 0; s.hz[MERCURY] = 0;
   s.hx[VENUS] = 0.72*AU; s.hy[VENUS] = 0; s.hz[VENUS] = 0;
@@ -315,16 +316,21 @@ int main(int argc, char* argv[]) {
   }
 
   int numBlocks = (s.nbpart + blockSize - 1) / blockSize;
+
+  auto start = std::chrono::high_resolution_clock::now();
   for (size_t step = 0; step< nbstep; step++) {
     if (step %printevery == 0) {
       s.copy_from_device();
       dump_state(s);
     }
-
   reset_force_kernel<<<numBlocks, blockSize>>>(s.dfx, s.dfy, s.dfz, s.nbpart);
   compute_force_kernel<<<numBlocks, blockSize>>>(s.dmass, s.dx, s.dy, s.dz, s.dfx, s.dfy, s.dfz, s.nbpart, G);
   update_particles_kernel<<<numBlocks, blockSize>>>(s.dx, s.dy, s.dz, s.dvx, s.dvy, s.dvz, s.dfx, s.dfy, s.dfz, s.dmass, s.nbpart, dt);
   }
+  cudaDeviceSynchronize();
+  auto end = std::chrono::high_resolution_clock::now();
+  std::chrono::duration<double> elapsed = end - start;
+  std::cout << "GPU Time: " << elapsed.count() << " s\n";
   
   s.copy_from_device();
   dump_state(s);  

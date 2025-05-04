@@ -1,15 +1,20 @@
 NVCC = nvcc
+CXX = g++
+CXXFLAGS = -O3 -std=c++11
 NVCC_FLAGS = -O3 -arch=sm_61
-EXEC = nbody_gpu
+EXEC_GPU = nbody_gpu
+EXEC_CPU = nbody_cpu
 
-all: $(EXEC)
+all: $(EXEC_GPU) $(EXEC_CPU)
 
-$(EXEC): nbody.cpp
-	$(NVCC) $(NVCC_FLAGS) nbody.cpp -o $(EXEC)
+$(EXEC_GPU): nbody.cpp
+	$(NVCC) $(NVCC_FLAGS) $< -o $@
+$(EXEC_CPU): nbody-original.cpp
+	$(CXX) $(CXXFLAGS) $< -o $@
 
-test: $(EXEC)
+test: $(EXEC_GPU) $(EXEC_CPU)
 	chmod +x run_tests.sh
 	./run_tests.sh
 
 clean:
-	rm -f $(EXEC) test_results.txt
+	rm -f $(EXEC_GPU) $(EXEC_CPU)
