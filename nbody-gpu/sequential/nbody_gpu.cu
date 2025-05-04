@@ -5,6 +5,25 @@
 #include <cuda_runtime.h>
 #include <chrono>
 
+#define CHECK_CUDA_ERROR(call) { \
+  cudaError_t err = call; \
+  if (err != cudaSuccess) { \
+      std::cerr << "CUDA error at " << __FILE__ << ":" << __LINE__ << ": " \
+                << cudaGetErrorString(err) << std::endl; \
+      exit(EXIT_FAILURE); \
+  } \
+}
+
+#define CHECK_KERNEL_ERROR() { \
+  cudaError_t err = cudaGetLastError(); \
+  if (err != cudaSuccess) { \
+      std::cerr << "Kernel error at " << __FILE__ << ":" << __LINE__ << ": " \
+                << cudaGetErrorString(err) << std::endl; \
+      exit(EXIT_FAILURE); \
+  } \
+}
+
+
 double G = 6.674*std::pow(10,-11);
 //double G = 1;
 
@@ -30,16 +49,16 @@ struct simulation {
   double* hfz;
 
   //device
-  double* dmass;
-  double* dx;
-  double* dy;
-  double* dz;
-  double* dvx;
-  double* dvy;
-  double* dvz;
-  double* dfx;
-  double* dfy;
-  double* dfz;
+  CHECK_CUDA_ERROR(cudaMalloc(&dmass, nb * sizeof(double)));
+  CHECK_CUDA_ERROR(cudaMalloc(&dx, nb * sizeof(double)));
+  CHECK_CUDA_ERROR(cudaMalloc(&dy, nb * sizeof(double)));
+  CHECK_CUDA_ERROR(cudaMalloc(&dz, nb * sizeof(double)));
+  CHECK_CUDA_ERROR(cudaMalloc(&dvx, nb * sizeof(double)));
+  CHECK_CUDA_ERROR(cudaMalloc(&dvy, nb * sizeof(double)));
+  CHECK_CUDA_ERROR(cudaMalloc(&dvz, nb * sizeof(double)));
+  CHECK_CUDA_ERROR(cudaMalloc(&dfx, nb * sizeof(double)));
+  CHECK_CUDA_ERROR(cudaMalloc(&dfy, nb * sizeof(double)));
+  CHECK_CUDA_ERROR(cudaMalloc(&dfz, nb * sizeof(double))));
 
   simulation(size_t nb) : nbpart(nb) {
     //host memory
@@ -80,42 +99,41 @@ struct simulation {
     delete[] hfy; 
     delete[] hfz;
 
-    cudaFree(dmass);
-    cudaFree(dx);
-    cudaFree(dy);
-    cudaFree(dz);
-    cudaFree(dvx);
-    cudaFree(dvy);
-    cudaFree(dvz);
-    cudaFree(dfx);
-    cudaFree(dfy);
-    cudaFree(dfz);
+    CHECK_CUDA_ERROR(cudaFree(dmass));
+    CHECK_CUDA_ERROR(cudaFree(dx));
+    CHECK_CUDA_ERROR(cudaFree(dy));
+    CHECK_CUDA_ERROR(cudaFree(dz));
+    CHECK_CUDA_ERROR(cudaFree(dvx));
+    CHECK_CUDA_ERROR(cudaFree(dvy));
+    CHECK_CUDA_ERROR(cudaFree(dvz));
+    CHECK_CUDA_ERROR(cudaFree(dfx));
+    CHECK_CUDA_ERROR(cudaFree(dfy));
+    CHECK_CUDA_ERROR(cudaFree(dfz));
   }
 
   //copy from host to device
-  void copy_to_device() {
-    cudaMemcpy(dmass, hmass, nbpart * sizeof(double), cudaMemcpyHostToDevice);
-    cudaMemcpy(dx, hx, nbpart * sizeof(double), cudaMemcpyHostToDevice);
-    cudaMemcpy(dy, hy, nbpart * sizeof(double), cudaMemcpyHostToDevice);
-    cudaMemcpy(dz, hz, nbpart * sizeof(double), cudaMemcpyHostToDevice);
-    cudaMemcpy(dvx, hvx, nbpart * sizeof(double), cudaMemcpyHostToDevice);
-    cudaMemcpy(dvy, hvy, nbpart * sizeof(double), cudaMemcpyHostToDevice);
-    cudaMemcpy(dvz, hvz, nbpart * sizeof(double), cudaMemcpyHostToDevice);
-  }
+void copy_to_device() {
+  CHECK_CUDA_ERROR(cudaMemcpy(dmass, hmass, nbpart * sizeof(double), cudaMemcpyHostToDevice));
+  CHECK_CUDA_ERROR(cudaMemcpy(dx, hx, nbpart * sizeof(double), cudaMemcpyHostToDevice));
+  CHECK_CUDA_ERROR(cudaMemcpy(dy, hy, nbpart * sizeof(double), cudaMemcpyHostToDevice));
+  CHECK_CUDA_ERROR(cudaMemcpy(dz, hz, nbpart * sizeof(double), cudaMemcpyHostToDevice));
+  CHECK_CUDA_ERROR(cudaMemcpy(dvx, hvx, nbpart * sizeof(double), cudaMemcpyHostToDevice));
+  CHECK_CUDA_ERROR(cudaMemcpy(dvy, hvy, nbpart * sizeof(double), cudaMemcpyHostToDevice));
+  CHECK_CUDA_ERROR(cudaMemcpy(dvz, hvz, nbpart * sizeof(double), cudaMemcpyHostToDevice));
+}
 
-  //copy from device to host
-  void copy_from_device() {
-    cudaMemcpy(hx, dx, nbpart * sizeof(double), cudaMemcpyDeviceToHost);
-    cudaMemcpy(hy, dy, nbpart * sizeof(double), cudaMemcpyDeviceToHost);
-    cudaMemcpy(hz, dz, nbpart * sizeof(double), cudaMemcpyDeviceToHost);
-    cudaMemcpy(hvx, dvx, nbpart * sizeof(double), cudaMemcpyDeviceToHost);
-    cudaMemcpy(hvy, dvy, nbpart * sizeof(double), cudaMemcpyDeviceToHost);
-    cudaMemcpy(hvz, dvz, nbpart * sizeof(double), cudaMemcpyDeviceToHost);
-    cudaMemcpy(hfx, dfx, nbpart * sizeof(double), cudaMemcpyDeviceToHost);
-    cudaMemcpy(hfy, dfy, nbpart * sizeof(double), cudaMemcpyDeviceToHost);
-    cudaMemcpy(hfz, dfz, nbpart * sizeof(double), cudaMemcpyDeviceToHost);
-  }
-};
+//copy from device to host
+void copy_from_device() {
+  CHECK_CUDA_ERROR(cudaMemcpy(hx, dx, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
+  CHECK_CUDA_ERROR(cudaMemcpy(hy, dy, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
+  CHECK_CUDA_ERROR(cudaMemcpy(hz, dz, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
+  CHECK_CUDA_ERROR(cudaMemcpy(hvx, dvx, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
+  CHECK_CUDA_ERROR(cudaMemcpy(hvy, dvy, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
+  CHECK_CUDA_ERROR(cudaMemcpy(hvz, dvz, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
+  CHECK_CUDA_ERROR(cudaMemcpy(hfx, dfx, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
+  CHECK_CUDA_ERROR(cudaMemcpy(hfy, dfy, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
+  CHECK_CUDA_ERROR(cudaMemcpy(hfz, dfz, nbpart * sizeof(double), cudaMemcpyDeviceToHost));
+}
 
 void random_init(simulation& s) {
   std::random_device rd;  
@@ -281,6 +299,19 @@ void loadfrom_file(simulation& s, std::string filename) {
 }
 
 int main(int argc, char* argv[]) {
+  // Check for CUDA devices at start
+  int deviceCount = 0;
+  CHECK_CUDA_ERROR(cudaGetDeviceCount(&deviceCount));
+  if (deviceCount == 0) {
+      std::cerr << "Error: No CUDA-capable devices found!" << std::endl;
+      return -1;
+  }
+  
+  // Print which device we're using
+  cudaDeviceProp deviceProp;
+  CHECK_CUDA_ERROR(cudaGetDeviceProperties(&deviceProp, 0)));
+  std::cout << "Using CUDA device: " << deviceProp.name << std::endl;
+
   if (argc != 6) {
     std::cerr
       <<"usage: "<<argv[0]<<" <input> <dt> <nbstep> <printevery> <blocksize>"<<"\n"
@@ -323,10 +354,13 @@ int main(int argc, char* argv[]) {
       s.copy_from_device();
     }*/
   reset_force_kernel<<<numBlocks, blockSize>>>(s.dfx, s.dfy, s.dfz, s.nbpart);
+  CHECK_KERNEL_ERROR();
   compute_force_kernel<<<numBlocks, blockSize>>>(s.dmass, s.dx, s.dy, s.dz, s.dfx, s.dfy, s.dfz, s.nbpart, G);
+  CHECK_KERNEL_ERROR();
   update_particles_kernel<<<numBlocks, blockSize>>>(s.dx, s.dy, s.dz, s.dvx, s.dvy, s.dvz, s.dfx, s.dfy, s.dfz, s.dmass, s.nbpart, dt);
+  CHECK_KERNEL_ERROR();
   }
-  cudaDeviceSynchronize();
+  CHECK_CUDA_ERROR(cudaDeviceSynchronize());
   auto end = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double> elapsed = end - start;
   std::cout << "GPU Time: " << elapsed.count() << " s\n";
