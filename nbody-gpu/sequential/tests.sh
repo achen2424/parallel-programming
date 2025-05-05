@@ -4,7 +4,7 @@
 #SBATCH --time=01:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --gres=gpu:V100:1
+#SBATCH --gres=gpu:TitanV:1
 
 module load cuda/12.4
 > output.txt
@@ -12,9 +12,7 @@ module load cuda/12.4
 OUTPUT="output.txt"
 
 echo "GPU TESTS" >> $OUTPUT
-# echo "Test Case 1: planet dt=200 steps=5000 print_every=100 block_size=128" >> $OUTPUT
-# ./nbody_gpu planet 200 5000 100 128 >> $OUTPUT
-# echo "" >> $OUTPUT
+
 echo "Test Case 1: planet dt=200 steps=5000 print_every=100 block_size=128" >> $OUTPUT
 ./nbody_gpu planet 200 5000 100 128 >> $OUTPUT
 echo "" >> $OUTPUT
