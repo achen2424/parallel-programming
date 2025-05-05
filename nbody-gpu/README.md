@@ -14,17 +14,12 @@ This project implements gravitational N-body simulations in both sequential (CPU
   - Loading from input files
 - GPU version accelerates computation using CUDA kernels
 
-## Compilation
+## Compilation and Usage
 ### CPU version
-`g++ nbody_cpu.cpp -o nbody_cpu -O3`
-
+`g++ nbody_cpu.cpp -o nbody_cpu -O3`\
+`./nbody_cpu <input> <dt> <steps> <print_every>`
 ### GPU version (requires CUDA)
-`nvcc nbody_gpu.cu -o nbody_gpu -O3 -arch=sm_61`
-
-## Usage
-CPU Version\
-`./nbody_cpu <input> <dt> <steps> <print_every>`\
-GPU Version\
+`nvcc nbody_gpu.cu -o nbody_gpu -O3 -arch=sm_61`\
 `./nbody_gpu <input> <dt> <steps> <print_every> <block_size>`
 
 - input: Number of particles, planet, or input filename
