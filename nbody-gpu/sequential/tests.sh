@@ -4,9 +4,9 @@
 #SBATCH --time=01:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --gres=gpu:TitanV:1
+#SBATCH --gres=gpu:V100:1
 
-module load cuda/11.8
+module load cuda/12.4
 > output.txt
 
 OUTPUT="output.txt"
