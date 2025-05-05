@@ -22,9 +22,9 @@ This project implements gravitational N-body simulations in both sequential (CPU
 `nvcc nbody_gpu.cu -o nbody_gpu -O3 -arch=sm_61`
 
 ## Usage
-CPU Version
-`./nbody_cpu <input> <dt> <steps> <print_every>`
-GPU Version
+CPU Version\
+`./nbody_cpu <input> <dt> <steps> <print_every>`\
+GPU Version\
 `./nbody_gpu <input> <dt> <steps> <print_every> <block_size>`
 
 - input: Number of particles, planet, or input filename
@@ -40,6 +40,5 @@ Manual test examples:\
 `./nbody_gpu 20000 0.1 100 0 256`
 
 ## Results
-The GPU implementation demonstrates massive speedups over the CPU version, especially for larger particle counts.\
-For 1,000 particles, the GPU version completes nearly 24x faster than the CPU version. For 10,000 particles, the GPU version completes 245x faster compared to the CPU version.\
-See output.txt for example timings.\
+The GPU implementation demonstrates massive speedups over the CPU version, especially for larger particle counts. For 1,000 particles, the GPU version completes nearly 24x faster than the CPU version. For 10,000 particles, the GPU version completes 245x faster compared to the CPU version.\
+See output.txt for example timings.
