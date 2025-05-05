@@ -145,8 +145,8 @@ void random_init(simulation& s) {
 }
 
 void init_solar(simulation& s) {
+  simulation s(10);
   enum Planets {SUN, MERCURY, VENUS, EARTH, MARS, JUPITER, SATURN, URANUS, NEPTUNE, MOON};
-  s = simulation(10);
 
   // Masses in kg
   s.hmass[SUN] = 1.9891 * std::pow(10, 30);
@@ -191,6 +191,7 @@ void init_solar(simulation& s) {
       s.hfz[i] = 0;
   }
   s.copy_to_device();
+  return s;
 }
 
 //cuda kernel for computing forces
@@ -310,7 +311,7 @@ int main(int argc, char* argv[]) {
     } else {
       std::string inputparam = argv[1];
       if (inputparam == "planet") {
-	init_solar(s);
+	s = init_solar();
       } else{
 	loadfrom_file(s, inputparam);
       }
