@@ -144,7 +144,7 @@ void random_init(simulation& s) {
   s.copy_to_device();
 }
 
-void init_solar(simulation& s) {
+simulation init_solar() {
   simulation s(10);
   enum Planets {SUN, MERCURY, VENUS, EARTH, MARS, JUPITER, SATURN, URANUS, NEPTUNE, MOON};
 
