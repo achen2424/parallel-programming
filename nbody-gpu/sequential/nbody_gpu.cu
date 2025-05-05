@@ -65,10 +65,6 @@ struct simulation {
     hfy = new double[nb](); 
     hfz = new double[nb]();
 
-    for (size_t i = 0; i < nb; ++i) {
-      hfx[i] = hfy[i] = hfz[i] = 0.0;
-    }
-
     //device memory
     CUDA_CHECK(cudaMalloc(&dmass, nb * sizeof(double)));
     CUDA_CHECK(cudaMalloc(&dx, nb * sizeof(double)));
@@ -81,6 +77,13 @@ struct simulation {
     CUDA_CHECK(cudaMalloc(&dfy, nb * sizeof(double)));
     CUDA_CHECK(cudaMalloc(&dfz, nb * sizeof(double)));
 
+    CUDA_CHECK(cudaMemset(dmass, 0, nb * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dx, 0, nb * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dy, 0, nb * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dz, 0, nb * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dvx, 0, nb * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dvy, 0, nb * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dvz, 0, nb * sizeof(double)));
     CUDA_CHECK(cudaMemset(dfx, 0, nb * sizeof(double)));
     CUDA_CHECK(cudaMemset(dfy, 0, nb * sizeof(double)));
     CUDA_CHECK(cudaMemset(dfz, 0, nb * sizeof(double)));
@@ -109,6 +112,47 @@ struct simulation {
     CUDA_CHECK(cudaFree(dfx));
     CUDA_CHECK(cudaFree(dfy));
     CUDA_CHECK(cudaFree(dfz));
+  }
+
+  //resize function to handle changing particle count
+  void resize(size_t new_nbpart) {
+    if (new_nbpart == nbpart) return;
+
+    this->~simulation();
+
+    nbpart = new_nbpart;
+    hmass = new double[nbpart]();
+    hx = new double[nbpart](); 
+    hy = new double[nbpart](); 
+    hz = new double[nbpart]();
+    hvx = new double[nbpart](); 
+    hvy = new double[nbpart](); 
+    hvz = new double[nbpart]();
+    hfx = new double[nbpart](); 
+    hfy = new double[nbpart](); 
+    hfz = new double[nbpart]();
+
+    CUDA_CHECK(cudaMalloc(&dmass, nbpart * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dx, nbpart * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dy, nbpart * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dz, nbpart * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dvx, nbpart * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dvy, nbpart * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dvz, nbpart * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dfx, nbpart * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dfy, nbpart * sizeof(double)));
+    CUDA_CHECK(cudaMalloc(&dfz, nbpart * sizeof(double)));
+
+    CUDA_CHECK(cudaMemset(dmass, 0, nbpart * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dx, 0, nbpart * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dy, 0, nbpart * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dz, 0, nbpart * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dvx, 0, nbpart * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dvy, 0, nbpart * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dvz, 0, nbpart * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dfx, 0, nbpart * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dfy, 0, nbpart * sizeof(double)));
+    CUDA_CHECK(cudaMemset(dfz, 0, nbpart * sizeof(double)));
   }
 
   //copy from host to device
@@ -168,11 +212,10 @@ void random_init(simulation& s) {
 
 void init_solar(simulation& s) {
   if (s.nbpart != 10) {
-    std::cerr << "Error: Simulation must be initialized with 10 particles for solar system\n";
-    return;
+    s.resize(10);
   }
+
   enum Planets {SUN, MERCURY, VENUS, EARTH, MARS, JUPITER, SATURN, URANUS, NEPTUNE, MOON};
-  s = simulation(10);
 
   // Masses in kg
   s.hmass[SUN] = 1.9891 * std::pow(10, 30);
@@ -293,17 +336,19 @@ void dump_state(simulation& s) {
 }
 
 void loadfrom_file(simulation& s, std::string filename) {
-  std::ifstream in (filename);
-  size_t nbpart;
-  in>>nbpart;
-  if (s.nbpart != nbpart) {
-    std::cerr << "Error: Simulation has " << s.nbpart << " particles, but file has " << nbpart << "\n";
-    return;
+  std::ifstream in(filename);
+  if (!in.is_open()) {
+    std::cerr << "ERROR: COULD NOT OPEN FILE " << filename << std::endl;
+    exit(EXIT_FAILURE);
   }
-  s = simulation(nbpart);
+  size_t nbpart;
+  in >> nbpart;
+  if (s.nbpart != nbpart) {
+    s.resize(nbpart);
+  }
   for (size_t i=0; i<s.nbpart; ++i) {
-    in>>s.hmass[i];
-    in >>  s.hx[i] >>  s.hy[i] >>  s.hz[i];
+    in >> s.hmass[i];
+    in >> s.hx[i] >> s.hy[i] >> s.hz[i];
     in >> s.hvx[i] >> s.hvy[i] >> s.hvz[i];
     in >> s.hfx[i] >> s.hfy[i] >> s.hfz[i];
   }
@@ -336,15 +381,15 @@ int main(int argc, char* argv[]) {
     size_t nbpart = std::atol(argv[1]); //return 0 if not a number
     if ( nbpart > 0) {
       if (s.nbpart != nbpart) {
-        std::cerr << "Error: Need to implement resizing\n";
-        return -1;
-    }
-      s = simulation(nbpart);
+        s.resize(nbpart);
+      }
       random_init(s);
     } else {
       std::string inputparam = argv[1];
       if (inputparam == "planet") {
-        s = simulation(10);
+        if (s.nbpart != 10) {
+          s.resize(10);
+        }
         init_solar(s); 
       } else{
 	loadfrom_file(s, inputparam);
