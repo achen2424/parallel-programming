@@ -352,11 +352,8 @@ int main(int argc, char* argv[]) {
   update_particles_kernel<<<numBlocks, blockSize>>>(s.dx, s.dy, s.dz, s.dvx, s.dvy, s.dvz, s.dfx, s.dfy, s.dfz, s.dmass, s.nbpart, dt);
   }
   CUDA_CHECK(cudaDeviceSynchronize());
-  cudaError_t err = CUDA_CHECK(cudaGetLastError());
-  if (err != cudaSuccess) {
-    std::cerr << "CUDA error: " << cudaGetErrorString(err) << "\n";
-    return -1;
-  }
+  CUDA_CHECK(cudaGetLastError());
+
   auto end = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double> elapsed = end - start;
   std::cout << "GPU Time: " << elapsed.count() << " s" << std::endl;
