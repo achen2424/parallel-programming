@@ -54,16 +54,16 @@ struct simulation {
 
   simulation(size_t nb) : nbpart(nb) {
     //host memory
-    hmass = new double[nb];
-    hx = new double[nb]; 
-    hy = new double[nb]; 
-    hz = new double[nb];
-    hvx = new double[nb]; 
-    hvy = new double[nb]; 
-    hvz = new double[nb];
-    hfx = new double[nb]; 
-    hfy = new double[nb]; 
-    hfz = new double[nb];
+    hmass = new double[nb]();
+    hx = new double[nb](); 
+    hy = new double[nb](); 
+    hz = new double[nb]();
+    hvx = new double[nb](); 
+    hvy = new double[nb](); 
+    hvz = new double[nb]();
+    hfx = new double[nb](); 
+    hfy = new double[nb](); 
+    hfz = new double[nb]();
 
     for (size_t i = 0; i < nb; ++i) {
       hfx[i] = hfy[i] = hfz[i] = 0.0;
@@ -167,6 +167,10 @@ void random_init(simulation& s) {
 }
 
 void init_solar(simulation& s) {
+  if (s.nbpart != 10) {
+    std::cerr << "Error: Simulation must be initialized with 10 particles for solar system\n";
+    return;
+  }
   enum Planets {SUN, MERCURY, VENUS, EARTH, MARS, JUPITER, SATURN, URANUS, NEPTUNE, MOON};
   s = simulation(10);
 
@@ -292,6 +296,10 @@ void loadfrom_file(simulation& s, std::string filename) {
   std::ifstream in (filename);
   size_t nbpart;
   in>>nbpart;
+  if (s.nbpart != nbpart) {
+    std::cerr << "Error: Simulation has " << s.nbpart << " particles, but file has " << nbpart << "\n";
+    return;
+  }
   s = simulation(nbpart);
   for (size_t i=0; i<s.nbpart; ++i) {
     in>>s.hmass[i];
@@ -327,6 +335,10 @@ int main(int argc, char* argv[]) {
   {
     size_t nbpart = std::atol(argv[1]); //return 0 if not a number
     if ( nbpart > 0) {
+      if (s.nbpart != nbpart) {
+        std::cerr << "Error: Need to implement resizing\n";
+        return -1;
+    }
       s = simulation(nbpart);
       random_init(s);
     } else {
