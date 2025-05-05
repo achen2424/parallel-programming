@@ -336,7 +336,7 @@ int main(int argc, char* argv[]) {
   }
   auto end = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double> elapsed = end - start;
-  std::cout << "GPU Time: " << elapsed.count() << " s\n";
+  std::cout << "GPU Time: " << elapsed.count() << " s" << std::endl;
   
   //s.copy_from_device();
   //dump_state(s);  
