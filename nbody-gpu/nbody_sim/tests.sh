@@ -25,11 +25,7 @@ echo "Test Case 2: particles=10000 dt=0.1 steps=500 print_every=100 block_size=2
 ./nbody_gpu 10000 0.1 500 100 256 >> $OUTPUT
 echo "" >> $OUTPUT
 
-echo "Test Case 3: particles=20000 dt=0.1 steps=10 print_every=1 block_size=256" >> $OUTPUT
-./nbody_cpu 20000 0.1 10 1 256 >> $OUTPUT
-echo "" >> $OUTPUT
-
-echo "Test Case 4: particles=100000 dt=0.1 steps=500 print_every=100 block_size=512" >> $OUTPUT
+echo "Test Case 3: particles=100000 dt=0.1 steps=500 print_every=100 block_size=512" >> $OUTPUT
 ./nbody_gpu 100000 0.1 500 100 512 >> $OUTPUT
 echo "" >> $OUTPUT
 
