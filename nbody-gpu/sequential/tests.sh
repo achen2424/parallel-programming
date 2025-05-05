@@ -16,7 +16,7 @@ echo "GPU TESTS" >> $OUTPUT
 # ./nbody_gpu planet 200 5000 100 128 >> $OUTPUT
 # echo "" >> $OUTPUT
 echo "Test Case 1: planet dt=200 steps=5000 print_every=100 block_size=128" >> $OUTPUT
-./nbody_gpu planet 200 5000 100 128 2>&1 >> $OUTPUT
+./nbody_gpu planet 200 5000 100 128 >> $OUTPUT
 echo "" >> $OUTPUT
 
 echo "Test Case 2: particles=1000 dt=1 steps=1000 print_every=50 block_size=256" >> $OUTPUT
