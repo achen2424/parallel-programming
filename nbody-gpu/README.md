@@ -16,10 +16,10 @@ This project implements gravitational N-body simulations in both sequential (CPU
 - GPU version accelerates computation using CUDA kernels
 
 ## Compilation
-# CPU version
+### CPU version
 `g++ nbody_cpu.cpp -o nbody_cpu -O3`
 
-# GPU version (requires CUDA)
+### GPU version (requires CUDA)
 `nvcc nbody_gpu.cu -o nbody_gpu -O3 -arch=sm_61`
 
 ## Usage
@@ -35,7 +35,7 @@ GPU Version
 - block_size: CUDA thread block size (e.g., 128, 256, 512)
 
 ## Example Benchmarks
-Use `sbatch tests.sh` to run given test cases for GPU and CPU.
+Use `sbatch tests.sh` to run given test cases for GPU and CPU.\
 Manual test examples:
 `./nbody_cpu 20000 0.1 100 0`
 `./nbody_gpu 20000 0.1 100 0 256`
