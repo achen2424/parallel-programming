@@ -76,7 +76,6 @@ struct simulation {
     cudaMemset(dfy, 0, nb * sizeof(double));
     cudaMemset(dfz, 0, nb * sizeof(double));
   }
-  }
 
   ~simulation() {
     //free memory
