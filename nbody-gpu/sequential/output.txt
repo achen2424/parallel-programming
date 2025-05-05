@@ -1,20 +1,23 @@
 GPU TESTS
 Test Case 1: planet dt=200 steps=5000 print_every=100 block_size=128
-GPU Time: 0.0808981 s
+GPU Time: 0.0561484 s
 
 Test Case 2: particles=1000 dt=1 steps=1000 print_every=50 block_size=256
+GPU Time: 0.271937 s
 
 Test Case 3: particles=10000 dt=0.1 steps=500 print_every=100 block_size=256
+GPU Time: 1.31468 s
 
 Test Case 4: particles=100000 dt=0.1 steps=500 print_every=100 block_size=512
+GPU Time: 56.2844 s
 
 CPU TESTS
 Test Case 1: input_config=planet dt=200 steps=5000 print_every=100
-CPU Time: 0.00317844 s
+CPU Time: 0.00312372 s
 
 Test Case 2: particles=1000 dt=1 steps=1000 print_every=50
-CPU Time: 6.45734 s
+CPU Time: 6.51759 s
 
 Test Case 3: particles=10000 dt=0.1 steps=500 print_every=100
-CPU Time: 322.86 s
+CPU Time: 323.791 s
 
