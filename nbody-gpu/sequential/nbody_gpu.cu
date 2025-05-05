@@ -56,6 +56,10 @@ struct simulation {
     hfy = new double[nb]; 
     hfz = new double[nb];
 
+    for (size_t i = 0; i < nb; ++i) {
+      hfx[i] = hfy[i] = hfz[i] = 0.0;
+    }
+
     //device memory
     cudaMalloc(&dmass, nb * sizeof(double));
     cudaMalloc(&dx, nb * sizeof(double));
@@ -67,6 +71,11 @@ struct simulation {
     cudaMalloc(&dfx, nb * sizeof(double));
     cudaMalloc(&dfy, nb * sizeof(double));
     cudaMalloc(&dfz, nb * sizeof(double));
+
+    cudaMemset(dfx, 0, nb * sizeof(double));
+    cudaMemset(dfy, 0, nb * sizeof(double));
+    cudaMemset(dfz, 0, nb * sizeof(double));
+  }
   }
 
   ~simulation() {
@@ -103,6 +112,9 @@ struct simulation {
     cudaMemcpy(dvx, hvx, nbpart * sizeof(double), cudaMemcpyHostToDevice);
     cudaMemcpy(dvy, hvy, nbpart * sizeof(double), cudaMemcpyHostToDevice);
     cudaMemcpy(dvz, hvz, nbpart * sizeof(double), cudaMemcpyHostToDevice);
+    cudaMemcpy(dfx, hfx, nbpart * sizeof(double), cudaMemcpyHostToDevice);
+    cudaMemcpy(dfy, hfy, nbpart * sizeof(double), cudaMemcpyHostToDevice);
+    cudaMemcpy(dfz, hfz, nbpart * sizeof(double), cudaMemcpyHostToDevice);
   }
 
   //copy from device to host
@@ -140,6 +152,8 @@ void random_init(simulation& s) {
     s.hvz[i] = 0.;
     s.hvx[i] = s.hy[i]*1.5;
     s.hvy[i] = -s.hx[i]*1.5;
+
+    s.hfx[i] = s.hfy[i] = s.hfz[i] = 0.0;
   }
   s.copy_to_device();
 }
