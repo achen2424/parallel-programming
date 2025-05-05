@@ -1,5 +1,4 @@
 # CUDA-Based Parallel N-Body Simulation in C++
-## Overview
 This project implements gravitational N-body simulations in both sequential (CPU) and parallel (GPU/CUDA) versions, comparing their performance.
 ## Contents
 - `nbody_cpu.cpp`: Sequential CPU implementation
@@ -16,10 +15,10 @@ This project implements gravitational N-body simulations in both sequential (CPU
 - GPU version accelerates computation using CUDA kernels
 
 ## Compilation
-### CPU version
-`g++ nbody_cpu.cpp -o nbody_cpu -O3`
+### CPU version\
+`g++ nbody_cpu.cpp -o nbody_cpu -O3`\
 
-### GPU version (requires CUDA)
+### GPU version (requires CUDA)\
 `nvcc nbody_gpu.cu -o nbody_gpu -O3 -arch=sm_61`
 
 ## Usage
@@ -36,9 +35,10 @@ GPU Version
 
 ## Example Benchmarks
 Use `sbatch tests.sh` to run given test cases for GPU and CPU.\
-Manual test examples:
-`./nbody_cpu 20000 0.1 100 0`
+Manual test examples:\
+`./nbody_cpu 20000 0.1 100 0`\
 `./nbody_gpu 20000 0.1 100 0 256`
 
 ## Results
-See output.txt for example timings.
+See output.txt for example timings.\
+The GPU implementation demonstrates massive speedups over the CPU version, especially for larger particle counts. For 1,000 particles, the GPU version completes nearly 24x faster than the CPU version. For 10,000 particles, the GPU version completes 245x faster compared to the CPU version.
